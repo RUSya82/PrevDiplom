@@ -353,43 +353,35 @@ document.addEventListener('DOMContentLoaded', () => {
             return val;
         };
         formName.forEach((item) => {
-            item.addEventListener('blur', (e) => {
+            item.addEventListener('input', (e) => {
                 let val = e.target.value;
-                val = val.replace(/[^а-яё^ \-]/ig, '');//только кириллица, дефис и пробел
-                val = customTrim(val);
-                val = val.replace(/( |^)[ а-яё]/g, (u) => u.toUpperCase());//capitalize
+                val = val.replace(/[^а-яё^ ]/ig, '');//только кириллица, дефис и пробел
                 e.target.value = val;
             });
         });
 
-        form2Message.addEventListener('blur', (e) => {
+        form2Message.addEventListener('input', (e) => {
             let target = e.target;
             let val = target.value;
-            val = val.replace(/[^а-яё.,:;^ \-]/ig, '');//только кириллица, дефис и пробел
-            val = customTrim(val);
+            val = val.replace(/[^а-яё0-9.,:!?;^ \-]/ig, '');//только кириллица, дефис и пробел
             target.value = val;
         });
         formEmail.forEach((item) => {
             item.addEventListener('blur', (e) => {
                 let target = e.target;
                 let val = target.value;
-                //val = val.replace(/[^_@.!~*'a-zA-Z\-]/g, '');
                 val = val.replace(/[^a-z@\-!*~'_.]/ig, '');
                 val = customTrim(val);
                 target.value = val;
             });
         });
         formPhone.forEach((item) => {
-            item.addEventListener('blur', (e) => {
-                let target = e.target;
-                let val = target.value;
-                val = val.replace(/[^\d()\-]/ig, '');//только цифры, тире и скобки
-                val = customTrim(val);
-                target.value = val;
+            item.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^+\d]/ig, '');//только цифры, +
             });
         });
     };
-    //validFeedbackForm();
+    validFeedbackForm();
 
     const calc = (price = 100) => {
         const calcBlock = document.querySelector('.calc-block');
@@ -470,4 +462,55 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     calc(100);
+
+    const sendForm = (formSelector) => {
+        const errorMessage = "Что то пошло не так!";
+        const loadMessage = "Загрузка!";
+        const successMessage = "Спасибо! Мы скоро с Вами свяжемся!";
+
+        const form = document.getElementById(formSelector);
+        const statusMessage = document.createElement('div');
+        statusMessage.style.cssText = 'font-size: 2rem; color:#fff;';
+
+        form.addEventListener('submit', (event) => {
+           event.preventDefault();
+           form.appendChild(statusMessage);
+           statusMessage.textContent = loadMessage;
+            const formData = new FormData(form);
+            let body = {};
+            formData.forEach((item, index) => {
+                body[index] = item;
+            });
+            postData(body,
+                () => {
+                    statusMessage.textContent = successMessage;
+                    form.reset();
+                },
+                (error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
+        });
+        const postData = (body, outputData, errorData) => {
+            const request = new XMLHttpRequest();
+            request.addEventListener('readystatechange', (e) => {
+
+                if(request.readyState !== 4){
+                    return;
+                }
+                if(request.status === 200){
+                    outputData();
+                } else {
+                    errorData(request.status);
+                }
+            });
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/json');
+
+            request.send(JSON.stringify(body));
+        };
+    };
+    sendForm('form1');
+    sendForm('form2');
+    sendForm('form3');
 });

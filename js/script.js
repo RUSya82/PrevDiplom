@@ -456,6 +456,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         calcBlock.addEventListener('change', (e) => {
             let target = e.target;
+            const typeValue = calcType.options[calcType.selectedIndex].value;
+            console.log();
+            if(target.matches('select') && !typeValue){
+                calcDay.value = '';
+                calcSquare.value = '';
+                calcCount.value = '';
+                totalBlock.textContent = '0';
+            }
             if(target.matches('input, select')){
                 calcSum();
             }
@@ -463,54 +471,136 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     calc(100);
 
-    const sendForm = (formSelector) => {
+    /**
+     * загоняем наши формы в валидатор
+     * @type {Validator}
+     */
+    let validForm1 = new Validator('form1', [
+        {
+            selector: 'form1-name',
+            method: 'name'
+        },
+        {
+            selector: 'form1-email',
+            method: 'email'
+        },
+        {
+            selector: 'form1-phone',
+            method: 'phone'
+        }
+    ]);
+    let validForm2 = new Validator('form2', [
+        {
+            selector: 'form2-name',
+            method: 'name'
+        },
+        {
+            selector: 'form2-email',
+            method: 'email'
+        },
+        {
+            selector: 'form2-phone',
+            method: 'phone'
+        },
+        {
+            selector: 'form2-message',
+            method: 'message'
+        }
+    ]);
+    let validForm3 = new Validator('form3', [
+        {
+            selector: 'form3-name',
+            method: 'name'
+        },
+        {
+            selector: 'form3-email',
+            method: 'email'
+        },
+        {
+            selector: 'form3-phone',
+            method: 'phone'
+        },
+    ]);
+
+
+
+    const sendForm = (formSelector, validObject) => {
         const errorMessage = "Что то пошло не так!";
         const loadMessage = "Загрузка!";
         const successMessage = "Спасибо! Мы скоро с Вами свяжемся!";
-
+        const noValidMessage = "Исправьте данные в полях выделенных красным";
         const form = document.getElementById(formSelector);
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 2rem; color:#fff;';
 
+        const postData = (body) => {
+            console.log('postData');
+            return new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
+                request.addEventListener('readystatechange', (e) => {
+
+                    if(request.readyState !== 4){
+                        return;
+                    }
+                    if(request.status === 200){
+                        resolve(request.status);
+                    } else {
+                        reject(request.statusText);
+                    }
+                });
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+
+                request.send(JSON.stringify(body));
+            });
+        };
+        const cleanMessage = () => {
+            setTimeout(() => {
+                statusMessage.textContent = '';
+            }, 1000);
+        };
+
+
         form.addEventListener('submit', (event) => {
            event.preventDefault();
            form.appendChild(statusMessage);
-           statusMessage.textContent = loadMessage;
+
             const formData = new FormData(form);
             let body = {};
             formData.forEach((item, index) => {
                 body[index] = item;
             });
-            postData(body,
-                () => {
-                    statusMessage.textContent = successMessage;
-                    form.reset();
-                },
-                (error) => {
-                    statusMessage.textContent = errorMessage;
-                    console.error(error);
-                });
+            if(!validObject.init()){
+                statusMessage.textContent = loadMessage;
+                postData(body)
+                    .then((status) => {
+                        if(status === 200){
+                            statusMessage.textContent = successMessage;
+                        } else {
+                            statusMessage.textContent = errorMessage;
+                        }
+                    })
+                    .then(() => {
+                        setTimeout(() => {
+                            cleanMessage();
+                            event.target.reset();
+                            const popup = document.querySelector('.popup');
+                            popup.style.display = 'none';
+                        }, 2000);
+                    })
+                    .catch((error) => {
+                        statusMessage.textContent = errorMessage;
+                        cleanMessage();
+                        console.error(error);
+                    });
+            } else {
+                statusMessage.textContent = noValidMessage;
+                validObject.cleanErrors();
+            }
         });
-        const postData = (body, outputData, errorData) => {
-            const request = new XMLHttpRequest();
-            request.addEventListener('readystatechange', (e) => {
 
-                if(request.readyState !== 4){
-                    return;
-                }
-                if(request.status === 200){
-                    outputData();
-                } else {
-                    errorData(request.status);
-                }
-            });
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-
-            request.send(JSON.stringify(body));
-        };
     };
-    sendForm('form1');
-    sendForm('form2');
-    sendForm('form3');
+    sendForm('form1', validForm1);
+    sendForm('form2', validForm2);
+    sendForm('form3', validForm3);
 });

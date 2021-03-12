@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addZero(number) {
         return +number < 10 ? ('0' + number) : number;
     }
+
     /**
      * Функция плавного скролла до элемента, чистая, работает как вверх, так и вниз (писал сам)))
      * @param element - ссылка на элемент
@@ -206,10 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
          * Добавление точек
          */
         const addDots = () => {
-            for(let i = 0; i < slides.length; i++){
+            for (let i = 0; i < slides.length; i++) {
                 let dot = document.createElement('li');
                 dot.classList.add('dot');
-                if(i === 0){
+                if (i === 0) {
                     dot.classList.add('dot-active');
                 }
                 dots.push(dot);
@@ -222,20 +223,20 @@ document.addEventListener('DOMContentLoaded', () => {
          * проверка номера текущего слайда, если что не так, корректирует
          */
         const checkSlideNumber = () => {
-          if(currentSlide < 0){
-              currentSlide = slides.length - 1;
-          } else if(currentSlide >= slides.length){
-              currentSlide = 0;
-          }
+            if (currentSlide < 0) {
+                currentSlide = slides.length - 1;
+            } else if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            }
         };
         /**
          * Переход на следующий слайд
          * @param next - если true, то следующий, false - предыдущий
          */
-        const clickNextSlide = (next = true) =>{
+        const clickNextSlide = (next = true) => {
             slides[currentSlide].classList.remove('portfolio-item-active');
             dots[currentSlide].classList.remove('dot-active');
-            if (next){
+            if (next) {
                 currentSlide++;
             } else {
                 currentSlide--;
@@ -263,15 +264,15 @@ document.addEventListener('DOMContentLoaded', () => {
         slider.addEventListener('click', (e) => {
             e.preventDefault();
             let target = e.target;
-            if(!target.matches('.portfolio-btn, .dot')){
+            if (!target.matches('.portfolio-btn, .dot')) {
                 return;
             }
             //клики по кнопкам
-            if(target.matches('#arrow-right')){
+            if (target.matches('#arrow-right')) {
                 clickNextSlide(true);
-            } else if(target.matches('#arrow-left')){
+            } else if (target.matches('#arrow-left')) {
                 clickNextSlide(false);
-            } else if(target.matches('.dot')){          //клики по точкам
+            } else if (target.matches('.dot')) {          //клики по точкам
                 slides[currentSlide].classList.remove('portfolio-item-active');
                 dots[currentSlide].classList.remove('dot-active');
                 currentSlide = dots.indexOf(target);
@@ -282,14 +283,14 @@ document.addEventListener('DOMContentLoaded', () => {
         //остановка слайдера при наведении на точки и стрелки
         slider.addEventListener('mouseover', (e) => {
             let target = e.target;
-            if(target.matches('.portfolio-btn') || target.matches('.dot')){
+            if (target.matches('.portfolio-btn') || target.matches('.dot')) {
                 stopSlider();
             }
         });
         //запуск слайдера после того, как мышку убрали с точек и стрелок
         slider.addEventListener('mouseout', (e) => {
             let target = e.target;
-            if(target.matches('.portfolio-btn') || target.matches('.dot')){
+            if (target.matches('.portfolio-btn') || target.matches('.dot')) {
                 playSlider();
             }
         });
@@ -338,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formEmail = document.querySelectorAll('.form-email');
         const formPhone = document.querySelectorAll('.form-phone');
         const form2 = document.getElementById('form2');
-        form2.addEventListener('blur', (e) => console.log(e.target), true );
+        form2.addEventListener('blur', (e) => console.log(e.target), true);
         /**
          * преобразует строку: много пробелов и дефисов в один,
          * пробелы и дефисы в начале и в конце обрезаются
@@ -392,7 +393,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalBlock = document.getElementById('total');
 
 
-
         const calcSum = () => {
             let total = 0,
                 countValue = 1,
@@ -408,23 +408,23 @@ document.addEventListener('DOMContentLoaded', () => {
              */
             const changeSum = () => {
                 id = requestAnimationFrame(changeSum);
-                if(oldTotal === total){
+                if (oldTotal === total) {
                     cancelAnimationFrame(id);
                     currentTotal = 0;
                     return;
                 }
-                if(oldTotal < total){
+                if (oldTotal < total) {
                     currentTotal += delta;
-                    if(currentTotal > total){
+                    if (currentTotal > total) {
                         currentTotal = total;
                         cancelAnimationFrame(id);
                         totalBlock.textContent = Math.floor(currentTotal);
                         currentTotal = 0;
                         return;
                     }
-                } else if(oldTotal > total){
+                } else if (oldTotal > total) {
                     currentTotal -= delta;
-                    if(currentTotal < total){
+                    if (currentTotal < total) {
                         currentTotal = total;
                         cancelAnimationFrame(id);
                         totalBlock.textContent = Math.floor(currentTotal);
@@ -436,20 +436,19 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
 
-            if(calcCount.value > 1){
-                countValue += (calcCount.value - 1)/10;
+            if (calcCount.value > 1) {
+                countValue += (calcCount.value - 1) / 10;
             }
-            if(calcDay.value && calcDay.value < 5){
+            if (calcDay.value && calcDay.value < 5) {
                 dayValue = 2;
-            } else if (calcDay.value && calcDay.value < 10){
+            } else if (calcDay.value && calcDay.value < 10) {
                 dayValue = 1.5;
             }
-            if(typeValue && squareValue){
-                total  =  price * countValue * dayValue * typeValue * squareValue;
-                delta = Math.abs(total - oldTotal)/20;
+            if (typeValue && squareValue) {
+                total = price * countValue * dayValue * typeValue * squareValue;
+                delta = Math.abs(total - oldTotal) / 20;
                 changeSum();
             }
-
 
 
         };
@@ -458,13 +457,13 @@ document.addEventListener('DOMContentLoaded', () => {
             let target = e.target;
             const typeValue = calcType.options[calcType.selectedIndex].value;
             console.log();
-            if(target.matches('select') && !typeValue){
+            if (target.matches('select') && !typeValue) {
                 calcDay.value = '';
                 calcSquare.value = '';
                 calcCount.value = '';
                 totalBlock.textContent = '0';
             }
-            if(target.matches('input, select')){
+            if (target.matches('input, select')) {
                 calcSum();
             }
         });
@@ -523,7 +522,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ]);
 
 
-
     const sendForm = (formSelector, validObject) => {
         const errorMessage = "Что то пошло не так!";
         const loadMessage = "Загрузка!";
@@ -534,24 +532,9 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessage.style.cssText = 'font-size: 2rem; color:#fff;';
 
         const postData = (body) => {
-            console.log('postData');
-            return new Promise((resolve, reject) => {
-                const request = new XMLHttpRequest();
-                request.addEventListener('readystatechange', (e) => {
-
-                    if(request.readyState !== 4){
-                        return;
-                    }
-                    if(request.status === 200){
-                        resolve(request.status);
-                    } else {
-                        reject(request.statusText);
-                    }
-                });
-                request.open('POST', './server.php');
-                request.setRequestHeader('Content-Type', 'application/json');
-
-                request.send(JSON.stringify(body));
+            return fetch('./server.php', {
+                body: body,
+                method: 'POST',
             });
         };
         const cleanMessage = () => {
@@ -559,26 +542,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusMessage.textContent = '';
             }, 1000);
         };
-
-
         form.addEventListener('submit', (event) => {
-           event.preventDefault();
-           form.appendChild(statusMessage);
-
+            event.preventDefault();
+            form.appendChild(statusMessage);
             const formData = new FormData(form);
-            let body = {};
-            formData.forEach((item, index) => {
-                body[index] = item;
-            });
-            if(!validObject.init()){
+            if (!validObject.init()) {
                 statusMessage.textContent = loadMessage;
-                postData(body)
-                    .then((status) => {
-                        if(status === 200){
-                            statusMessage.textContent = successMessage;
-                        } else {
-                            statusMessage.textContent = errorMessage;
+                postData(formData)
+                    .then((response) => {
+                        if (response.status !== 200) {
+                            throw new Error('status not 200');
                         }
+                        statusMessage.textContent = successMessage;
                     })
                     .then(() => {
                         setTimeout(() => {

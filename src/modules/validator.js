@@ -9,7 +9,7 @@
  если pattern существует, то будет применен он, если нет, а передано имя метода (e-mail) например,
  то поле будет валидироваться встроенным методом
  */
-class Validator {
+ class Validator {
     constructor(formId, elements = []) {
         this.form = document.getElementById(formId);
         this.elements = elements;
@@ -70,7 +70,7 @@ class Validator {
 
     getPattern(pattern) {
         let patterns = {
-            email: new RegExp('^[a-z0-9\-_.]{2,30}@[a-z]{2,10}.[a-z]{2,5}$','gi'),
+            email: new RegExp('^[a-z0-9\-_.]{2,30}@[a-z]{2,10}\.[a-z]{2,5}$','gi'),
             phone: new RegExp('^[\+]?[0-9]{7,11}$', 'i'),
             name: new RegExp('^[а-яё]{2,20}$', 'i'),
             message: new RegExp('[а-яё0-9.,:!?; \-]', 'ig'),
@@ -78,3 +78,4 @@ class Validator {
         return patterns[pattern];
     }
 }
+export default Validator;

@@ -1,0 +1,28 @@
+{
+  "name": "gloproject2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack serve --config webpack.dev.config.js",
+    "prod": "webpack  --config webpack.prod.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RUSya82/PrevDiplom.git"
+  },
+  "author": "Ruslan Salimov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RUSya82/PrevDiplom/issues"
+  },
+  "homepage": "https://github.com/RUSya82/PrevDiplom#readme",
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.25.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

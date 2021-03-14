@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animateScroll();
     };
 
-    countTimer('28 Feb 2021');
+    countTimer('30 Mar 2021');
 
     const toggleMenu = () => {
         const menu = document.querySelector('menu');
@@ -367,15 +367,15 @@ document.addEventListener('DOMContentLoaded', () => {
             val = val.replace(/[^а-яё0-9.,:!?;^ \-]/ig, '');//только кириллица, дефис и пробел
             target.value = val;
         });
-        formEmail.forEach((item) => {
-            item.addEventListener('blur', (e) => {
-                let target = e.target;
-                let val = target.value;
-                val = val.replace(/[^a-z@\-!*~'_.]/ig, '');
-                val = customTrim(val);
-                target.value = val;
-            });
-        });
+        // formEmail.forEach((item) => {
+        //     item.addEventListener('blur', (e) => {
+        //         let target = e.target;
+        //         let val = target.value;
+        //         val = val.replace(/[^a-z@\-!*~'_.]/ig, '');
+        //         val = customTrim(val);
+        //         target.value = val;
+        //     });
+        // });
         formPhone.forEach((item) => {
             item.addEventListener('input', (e) => {
                 e.target.value = e.target.value.replace(/[^+\d]/ig, '');//только цифры, +
@@ -537,18 +537,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
             });
         };
+
         const cleanMessage = () => {
             setTimeout(() => {
                 statusMessage.textContent = '';
             }, 1000);
         };
+
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             form.appendChild(statusMessage);
             const formData = new FormData(form);
+            let body = {formData};
+            formData.forEach((item, index) => body[index] = item);
             if (!validObject.init()) {
                 statusMessage.textContent = loadMessage;
-                postData(formData)
+                postData(JSON.stringify(body))
                     .then((response) => {
                         if (response.status !== 200) {
                             throw new Error('status not 200');

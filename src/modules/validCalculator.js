@@ -5,7 +5,7 @@ const validCalculator = () => {
     const calcNum = document.querySelectorAll('.calc-square, .calc-count, .calc-day');
     calcNum.forEach((item) => {
         item.addEventListener('blur', (e) => {
-            let target = e.target;
+            const target = e.target;
             target.value = target.value.replace(/\D+/g, '');
         });
     });

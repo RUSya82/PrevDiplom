@@ -1,7 +1,7 @@
 const togglePopup = () => {
-    let popupBtn = document.querySelectorAll('.popup-btn');
-    let popup = document.querySelector('.popup');
-    let popupContent = document.querySelector('.popup-content');
+    const popupBtn = document.querySelectorAll('.popup-btn');
+    const popup = document.querySelector('.popup');
+    const popupContent = document.querySelector('.popup-content');
 
     popupBtn.forEach((elem) => {
         elem.addEventListener('click', () => {
@@ -10,7 +10,7 @@ const togglePopup = () => {
     });
 
     popup.addEventListener('click', (e) => {
-        let target = e.target;
+        const target = e.target;
         //клик по кнопке закрыть
         if (target.classList.contains('popup-close')) {
             popup.style.display = 'none';
@@ -26,13 +26,13 @@ const togglePopup = () => {
         if (document.documentElement.clientWidth > 768) {
             popup.style.display = 'block';
             popupContent.style.transform = `scale(0,0) translateX(-50px) rotate(-90deg)`;
-            let start = performance.now();
-            let duration = 120;
+            const start = performance.now();
+            const duration = 120;
             let progress = 0;
-            let popupAnimate = () => {
-                let now = performance.now();
+            const popupAnimate = () => {
+                const now = performance.now();
                 progress = (now - start) / duration;
-                let deg = 90 - 90 * progress;
+                const deg = 90 - 90 * progress;
                 if (progress <= 1) {
                     if (progress > 1) {
                         progress = 1;

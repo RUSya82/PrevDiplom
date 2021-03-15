@@ -7,7 +7,6 @@ const validFeedbackForm = () => {
     const formEmail = document.querySelectorAll('.form-email');
     const formPhone = document.querySelectorAll('.form-phone');
     const form2 = document.getElementById('form2');
-    form2.addEventListener('blur', (e) => console.log(e.target), true);
     /**
      * преобразует строку: много пробелов и дефисов в один,
      * пробелы и дефисы в начале и в конце обрезаются
@@ -30,20 +29,11 @@ const validFeedbackForm = () => {
     });
 
     form2Message.addEventListener('input', (e) => {
-        let target = e.target;
+        const target = e.target;
         let val = target.value;
         val = val.replace(/[^а-яё0-9.,:!?;^ \-]/ig, '');//только кириллица, дефис и пробел
         target.value = val;
     });
-    // formEmail.forEach((item) => {
-    //     item.addEventListener('blur', (e) => {
-    //         let target = e.target;
-    //         let val = target.value;
-    //         val = val.replace(/[^a-z@\-!*~'_.]/ig, '');
-    //         val = customTrim(val);
-    //         target.value = val;
-    //     });
-    // });
     formPhone.forEach((item) => {
         item.addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/[^+\d]/ig, '');//только цифры, +

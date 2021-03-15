@@ -3,14 +3,14 @@ const toggleMenu = () => {
     const menu = document.querySelector('menu');
     const menuItems = menu.querySelectorAll('ul>li');
     //соберем Nodelist в массив, чтобы пользоваться функциями
-    let menuItemsArr = [...menuItems];
+    const menuItemsArr = [...menuItems];
 
     const menuHandler = () => {
         menu.classList.toggle('active-menu');
     };
     //клики по документу
     document.body.addEventListener('click', (e) => {
-        let target = e.target;
+        const target = e.target;
         //если меню активно и кликнули не по нему
         if (!target.closest('menu') && menu.classList.contains('active-menu')) {
             menuHandler();
@@ -22,7 +22,7 @@ const toggleMenu = () => {
         if (target.classList.contains('close-btn')) {
             menuHandler();
         }
-        let li = target.closest('li');
+        const li = target.closest('li');
         //если li есть в машем массиве
         if (menuItemsArr.indexOf(li) !== -1) {
             e.preventDefault();

@@ -1,5 +1,5 @@
 const countTimer = (deadline) => {
-    let timerHours = document.getElementById('timer-hours'),
+    const timerHours = document.getElementById('timer-hours'),
         timerMinutes = document.getElementById('timer-minutes'),
         timerSeconds = document.getElementById('timer-seconds');
     function addZero(number) {
@@ -10,9 +10,9 @@ const countTimer = (deadline) => {
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
-        let dateStop = new Date(deadline).getTime();
-        let dateNow = new Date().getTime();
-        let dateDiff = (dateStop - dateNow) / 1000;
+        const dateStop = new Date(deadline).getTime();
+        const dateNow = new Date().getTime();
+        const dateDiff = (dateStop - dateNow) / 1000;
         if (dateDiff > 0) {
             seconds = (dateDiff % 60) ^ 0;
             minutes = ((dateDiff / 60) % 60) ^ 0;
@@ -24,7 +24,7 @@ const countTimer = (deadline) => {
     };
 
     const updateClock = () => {
-        let timer = getTimeRemaining();
+        const timer = getTimeRemaining();
         timerSeconds.textContent = addZero(timer.seconds);
         timerMinutes.textContent = addZero(timer.minutes);
         timerHours.textContent = addZero(timer.hours);

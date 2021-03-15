@@ -13,7 +13,7 @@ const calc = (price = 100) => {
             dayValue = 1;
         const typeValue = calcType.options[calcType.selectedIndex].value;
         const squareValue = +calcSquare.value;
-        let oldTotal = +totalBlock.textContent;
+        const oldTotal = +totalBlock.textContent;
         let delta = 0;
         let id = 0;
         let currentTotal = oldTotal;
@@ -68,9 +68,8 @@ const calc = (price = 100) => {
     };
 
     calcBlock.addEventListener('change', (e) => {
-        let target = e.target;
+        const target = e.target;
         const typeValue = calcType.options[calcType.selectedIndex].value;
-        console.log();
         if (target.matches('select') && !typeValue) {
             calcDay.value = '';
             calcSquare.value = '';

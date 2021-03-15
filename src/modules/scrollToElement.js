@@ -5,12 +5,12 @@
  */
 const scrollToElement = (element, duration) => {
     let Id; //id анимации
-    let start = performance.now();  //время старта
-    let topPosition = element.getBoundingClientRect().top; //текущая позиция элемента
-    let currentDocumentPosition = document.documentElement.scrollTop;//текущая прокрутка документа
+    const start = performance.now();  //время старта
+    const topPosition = element.getBoundingClientRect().top; //текущая позиция элемента
+    const currentDocumentPosition = document.documentElement.scrollTop;//текущая прокрутка документа
     let progress = 0;           //прогресс анимации
-    let animateScroll = () => {
-        let now = performance.now();    //текущее время
+    const animateScroll = () => {
+        const now = performance.now();    //текущее время
         progress = (now - start) / duration;  //вычисляем прогресс
         if (progress <= 1) {
             document.documentElement.scrollTop = currentDocumentPosition + topPosition * progress;

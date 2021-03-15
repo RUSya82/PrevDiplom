@@ -4,11 +4,10 @@ const serviceTabs = () => {
     const serviceTab = document.querySelectorAll('.service-tab');
 
     serviceHeader.addEventListener('click', (e) => {
-        let target = e.target.closest('.service-header-tab');
+        const target = e.target.closest('.service-header-tab');
         if (target) {
             serviceHeaderTabs.forEach((item, i) => {
                 if (item === target) {
-                    console.log(serviceTab[i]);
                     serviceTab[i].classList.remove('d-none');
                     item.classList.add('active');
                 } else {

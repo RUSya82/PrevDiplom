@@ -6,7 +6,7 @@ const slider = (interval) => {
     const slider = document.querySelector('.portfolio-content');//сам слайдер
     const slides = document.querySelectorAll('.portfolio-item');//слайды
     const dotsContainer = document.querySelector('.portfolio-dots');//контейнер для точек
-    let dots = [];              //массив с будущими точками
+    const dots = [];              //массив с будущими точками
     let currentSlide = 0;       //текущий слайд
     let intervalID;     //id для setInterval
     /**
@@ -69,7 +69,7 @@ const slider = (interval) => {
      */
     slider.addEventListener('click', (e) => {
         e.preventDefault();
-        let target = e.target;
+        const target = e.target;
         if (!target.matches('.portfolio-btn, .dot')) {
             return;
         }
@@ -88,14 +88,14 @@ const slider = (interval) => {
     });
     //остановка слайдера при наведении на точки и стрелки
     slider.addEventListener('mouseover', (e) => {
-        let target = e.target;
+        const target = e.target;
         if (target.matches('.portfolio-btn') || target.matches('.dot')) {
             stopSlider();
         }
     });
     //запуск слайдера после того, как мышку убрали с точек и стрелок
     slider.addEventListener('mouseout', (e) => {
-        let target = e.target;
+        const target = e.target;
         if (target.matches('.portfolio-btn') || target.matches('.dot')) {
             playSlider();
         }

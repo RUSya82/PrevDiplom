@@ -4,7 +4,7 @@ const formListener = () => {
      * загоняем наши формы в валидатор
      * @type {Validator}
      */
-    let validForm1 = new Validator('form1', [
+    const validForm1 = new Validator('form1', [
         {
             selector: 'form1-name',
             method: 'name'
@@ -18,7 +18,7 @@ const formListener = () => {
             method: 'phone'
         }
     ]);
-    let validForm2 = new Validator('form2', [
+    const validForm2 = new Validator('form2', [
         {
             selector: 'form2-name',
             method: 'name'
@@ -36,7 +36,7 @@ const formListener = () => {
             method: 'message'
         }
     ]);
-    let validForm3 = new Validator('form3', [
+    const validForm3 = new Validator('form3', [
         {
             selector: 'form3-name',
             method: 'name'
@@ -77,13 +77,13 @@ const formListener = () => {
         };
 
         form.addEventListener('submit', (event) => {
+            statusMessage.textContent = '';
             event.preventDefault();
             form.appendChild(statusMessage);
             const formData = new FormData(form);
-            let body = {formData};
+            const body = {};
             formData.forEach((item, index) => body[index] = item);
             if (!validObject.init()) {
-                //statusMessage.textContent = loadMessage;
                 statusMessage.append(loaderImg);
                 postData(JSON.stringify(body))
                     .then((response) => {

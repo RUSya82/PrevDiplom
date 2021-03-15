@@ -2,7 +2,7 @@
  * Замена фотографии в разделе "Наша команда" при наведении мыши
  */
 const changePhoto = () => {
-    let photos = document.querySelectorAll('.command__photo');
+    const photos = document.querySelectorAll('.command__photo');
     const togglePhoto = (event) => {
         let elem = event.target;
         let oldPhoto = elem.src;

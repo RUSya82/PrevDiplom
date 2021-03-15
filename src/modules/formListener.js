@@ -59,7 +59,9 @@ const formListener = () => {
         const noValidMessage = "Исправьте данные в полях выделенных красным";
         const form = document.getElementById(formSelector);
         const statusMessage = document.createElement('div');
-        statusMessage.style.cssText = 'font-size: 2rem; color:#fff;';
+        const loaderImg = document.createElement('img');
+        loaderImg.setAttribute('src', '../images/preloader.gif');
+        //statusMessage.style.cssText = 'font-size: 2rem; color:#fff;';
 
         const postData = (body) => {
             return fetch('./server.php', {
@@ -81,7 +83,8 @@ const formListener = () => {
             let body = {formData};
             formData.forEach((item, index) => body[index] = item);
             if (!validObject.init()) {
-                statusMessage.textContent = loadMessage;
+                //statusMessage.textContent = loadMessage;
+                statusMessage.append(loaderImg);
                 postData(JSON.stringify(body))
                     .then((response) => {
                         if (response.status !== 200) {

@@ -61,7 +61,7 @@ const formListener = () => {
         const statusMessage = document.createElement('div');
         const loaderImg = document.createElement('img');
         loaderImg.setAttribute('src', '../images/preloader.gif');
-        //statusMessage.style.cssText = 'font-size: 2rem; color:#fff;';
+        statusMessage.style.cssText = 'font-size: 2rem; color:#fff;';
 
         const postData = (body) => {
             return fetch('./server.php', {
